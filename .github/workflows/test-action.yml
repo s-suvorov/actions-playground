@@ -1,0 +1,18 @@
+name: "run testing script"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      # Required to allow actions/checkout to clone the repository onto the runner
+      contents: read
+      # Required to allow the vitest coverage action to write a comment into the pull request
+      pull-requests: write
+    steps:
+      - run: npm run test
+      - uses: davelosert/vitest-coverage-report-action@v1
+        with:
+          vite-config-path: vite.config.ts
